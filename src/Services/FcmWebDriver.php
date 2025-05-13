@@ -68,6 +68,21 @@ class FcmWebDriver extends Driver
                     'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
                 ]));
             }
+        } else {
+            $users = $model::all();
+
+            foreach ($users as $user) {
+                $user->notifyFirebase(
+                    message: $body,
+                    type: 'fcm-web',
+                    title: $title,
+                    url: $url,
+                    image: $image,
+                    icon: $icon,
+                    data: $data,
+                    sendToDatabase: false
+                );
+            }
         }
     }
 }
