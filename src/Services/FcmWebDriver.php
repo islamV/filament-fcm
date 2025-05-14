@@ -71,6 +71,11 @@ class FcmWebDriver extends Driver
         } else {
             $users = $model::all();
             foreach ($users as $user) {
+                $token = UserToken::query()
+                ->where('model_id', $user->id)
+                ->where('model_type', $model)
+                ->where('provider', 'fcm-web')
+                ->first();
                 dispatch(new NotifyFCMJob([
                     'user' => $user,
                     'title' => $title,
