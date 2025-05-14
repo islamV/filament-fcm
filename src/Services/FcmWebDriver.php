@@ -76,17 +76,19 @@ class FcmWebDriver extends Driver
                 ->where('model_type', $model)
                 ->where('provider', 'fcm-web')
                 ->first();
-                dispatch(new NotifyFCMJob([
-                    'user' => $user,
-                    'title' => $title,
-                    'message' => $body,
-                    'icon' => $icon,
-                    'image' => $image,
-                    'url' => $url,
-                    'type' => 'fcm-web',
-                    'data' => $data,
-                    'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
-                ]));
+                if ($token) {
+                    dispatch(new NotifyFCMJob([
+                        'user' => $user,
+                        'title' => $title,
+                        'message' => $body,
+                        'icon' => $icon,
+                        'image' => $image,
+                        'url' => $url,
+                        'type' => 'fcm-web',
+                        'data' => $data,
+                        'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
+                    ]));
+                }
             }
         }
     }
