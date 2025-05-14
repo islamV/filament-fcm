@@ -53,6 +53,7 @@ class NotifyFCMJob implements ShouldQueue
         $this->type = $arrgs['type'];
         $this->data = $arrgs['data'];
         $this->sendToDatabase = $arrgs['sendToDatabase'];
+
     }
 
     /**
@@ -66,6 +67,8 @@ class NotifyFCMJob implements ShouldQueue
         $log->title = $this->title;
         $log->description = $this->message;
         $log->provider = $this->type;
+        $log->model_type = get_class($this->user);
+        $log->model_id = $this->user->id;
         $log->type = 'info';
         $log->save();
 

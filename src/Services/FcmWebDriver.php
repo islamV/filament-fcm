@@ -70,18 +70,18 @@ class FcmWebDriver extends Driver
             }
         } else {
             $users = $model::all();
-
             foreach ($users as $user) {
-                $user->notifyFirebase(
-                    message: $body,
-                    type: 'fcm-web',
-                    title: $title,
-                    url: $url,
-                    image: $image,
-                    icon: $icon,
-                    data: $data,
-                    sendToDatabase: false
-                );
+                dispatch(new NotifyFCMJob([
+                    'user' => $user,
+                    'title' => $title,
+                    'message' => $body,
+                    'icon' => $icon,
+                    'image' => $image,
+                    'url' => $url,
+                    'type' => 'fcm-web',
+                    'data' => $data,
+                    'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
+                ]));
             }
         }
     }

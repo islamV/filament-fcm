@@ -69,6 +69,21 @@ class FcmMobileDriver extends Driver
                     'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
                 ]));
             }
+        }else {
+            $users = $model::all();
+            foreach ($users as $user) {
+                dispatch(new NotifyFCMJob([
+                    'user' => $user,
+                    'title' => $title,
+                    'message' => $body,
+                    'icon' => $icon,
+                    'image' => $image,
+                    'url' => $url,
+                    'type' => 'fcm-web',
+                    'data' => $data,
+                    'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
+                ]));
+            }
         }
     }
 }
