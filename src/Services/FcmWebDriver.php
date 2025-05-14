@@ -69,27 +69,27 @@ class FcmWebDriver extends Driver
                 ]));
             }
         } else {
-            $users = $model::all();
-            foreach ($users as $user) {
-                $token = UserToken::query()
-                ->where('model_id', $user->id)
-                ->where('model_type', $model)
-                ->where('provider', 'fcm-web')
-                ->first();
-                if ($token) {
-                    dispatch(new NotifyFCMJob([
-                        'user' => $user,
-                        'title' => $title,
-                        'message' => $body,
-                        'icon' => $icon,
-                        'image' => $image,
-                        'url' => $url,
-                        'type' => 'fcm-web',
-                        'data' => $data,
-                        'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
-                    ]));
-                }
-            }
+            // $users = $model::all();
+            // foreach ($users as $user) {
+            //     $token = UserToken::query()
+            //     ->where('model_id', $user->id)
+            //     ->where('model_type', $model)
+            //     ->where('provider', 'fcm-web')
+            //     ->first();
+            //     if ($token) {
+            //         dispatch(new NotifyFCMJob([
+            //             'user' => $user,
+            //             'title' => $title,
+            //             'message' => $body,
+            //             'icon' => $icon,
+            //             'image' => $image,
+            //             'url' => $url,
+            //             'type' => 'fcm-web',
+            //             'data' => $data,
+            //             'sendToDatabase' => $data['sendToDatabase'] ?? config('filament-fcm-driver.database.save', false),
+            //         ]));
+            //     }
+            // }
         }
     }
 }
