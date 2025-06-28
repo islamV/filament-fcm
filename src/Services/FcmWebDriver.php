@@ -35,7 +35,9 @@ class FcmWebDriver extends Driver
         } else {
             $data = array_merge($data, [
                 'id' => Str::random(6),
-                  'actions' => json_encode([]),
+                'actions' => json_encode([
+                    'url' => $url,
+                ]),
                 'body' => $body,
                 'color' => null,
                 'duration' => null,
@@ -72,10 +74,10 @@ class FcmWebDriver extends Driver
             $users = $model::all();
             foreach ($users as $user) {
                 $token = UserToken::query()
-                ->where('model_id', $user->id)
-                ->where('model_type', $model)
-                ->where('provider', 'fcm-web')
-                ->first();
+                    ->where('model_id', $user->id)
+                    ->where('model_type', $model)
+                    ->where('provider', 'fcm-web')
+                    ->first();
                 if ($token) {
                     dispatch(new NotifyFCMJob([
                         'user' => $user,
