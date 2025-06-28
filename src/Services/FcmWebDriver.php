@@ -35,7 +35,7 @@ class FcmWebDriver extends Driver
         } else {
             $data = array_merge($data, [
                 'id' => Str::random(6),
-                'actions' => json_encode([]),
+                  'actions' => json_encode([]),
                 'body' => $body,
                 'color' => null,
                 'duration' => null,
