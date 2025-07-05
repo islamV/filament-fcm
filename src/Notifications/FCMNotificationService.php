@@ -64,6 +64,11 @@ class FCMNotificationService extends Notification
                         ],
                     ],
                     'apns' => [
+                        'payload' => [
+                            'aps' => [
+                                'sound' => 'notifigation.caf',
+                            ],
+                        ],
                         'fcm_options' => [
                             'analytics_label' => 'analytics',
                         ],
@@ -73,6 +78,7 @@ class FCMNotificationService extends Notification
                     title: $this->title,
                     body: $this->message,
                     image: $this->image ?? null
+
                 )
             );
     }
