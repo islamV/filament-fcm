@@ -78,7 +78,6 @@ class FCMNotificationService extends Notification
                     title: $this->title,
                     body: $this->message,
                     image: $this->image ?? null
-
                 )
             );
     }
